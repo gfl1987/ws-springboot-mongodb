@@ -22,6 +22,6 @@ public class PostService {
 	}
 	
 	public List<Post> findByTitle(String text) { //metodo que retorna uma busca por titulo
-		return repo.findByTitleContainingIgnoreCase(text);
+		return repo.searchTitle(text); //retorna a pesquisa por texto
 	}
 }
