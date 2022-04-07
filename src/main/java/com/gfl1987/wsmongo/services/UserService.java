@@ -33,5 +33,10 @@ public class UserService { //classe de serviços responsaveis por tratar os usua
 
 	public User fromDTO(UserDTO objDto) { //meotodo que pega um DTO e instancia um usuario
 		return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
-	}	
+	}
+	
+	public void delete(String id) { //metodo para deletar um usuario por ID
+		findById(id);
+		repo.deleteById(id);
+	}
 }
