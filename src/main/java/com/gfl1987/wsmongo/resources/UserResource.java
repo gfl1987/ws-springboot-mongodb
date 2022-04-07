@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.gfl1987.wsmongo.domain.Post;
 import com.gfl1987.wsmongo.domain.User;
 import com.gfl1987.wsmongo.dto.UserDTO;
 import com.gfl1987.wsmongo.services.UserService;
@@ -57,6 +58,12 @@ public class UserResource {
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/{id}/posts", method=RequestMethod.GET)
+ 	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) { //método que retorna os posts de um usuario
+		User obj = service.findById(id);
+		return ResponseEntity.ok().body(obj.getPosts());
 	}
 
 }
