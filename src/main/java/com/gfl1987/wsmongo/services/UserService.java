@@ -39,4 +39,15 @@ public class UserService { //classe de serviços responsaveis por tratar os usua
 		findById(id);
 		repo.deleteById(id);
 	}
+	
+	public User update(User obj) { //metodo para atualizar um usuario
+		User newObj = findById(obj.getId()); 
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
+
+	private void updateData(User newObj, User obj) { //implementacao da atualizacao
+		newObj.setName(obj.getName());
+		newObj.setEmail(obj.getEmail());
+	}
 }

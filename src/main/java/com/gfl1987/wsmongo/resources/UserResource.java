@@ -25,20 +25,20 @@ public class UserResource {
 	private UserService service;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<UserDTO>> findAll() {
+	public ResponseEntity<List<UserDTO>> findAll() { //metodo de pesquisa geral
 		List<User> list = service.findAll();
 		List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+	public ResponseEntity<UserDTO> findById(@PathVariable String id) { //metodo de pesquisa por ID
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
- 	public ResponseEntity<Void> insert(@RequestBody UserDTO objDto) {
+ 	public ResponseEntity<Void> insert(@RequestBody UserDTO objDto) { //metodo de insercao
 		User obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -46,8 +46,16 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
- 	public ResponseEntity<Void> delete(@PathVariable String id) {
+ 	public ResponseEntity<Void> delete(@PathVariable String id) { //metodo de deleção
 		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+ 	public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id) { //metodo de atualizacao
+		User obj = service.fromDTO(objDto);
+		obj.setId(id);
+		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
 
