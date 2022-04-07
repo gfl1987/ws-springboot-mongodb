@@ -1,5 +1,6 @@
 package com.gfl1987.wsmongo.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,9 @@ public class PostService {
 	public Post findById(String id) { //metodo que retorna usuario por ID
 		Optional<Post> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+	}
+	
+	public List<Post> findByTitle(String text) { //metodo que retorna uma busca por titulo
+		return repo.findByTitleContainingIgnoreCase(text);
 	}
 }
