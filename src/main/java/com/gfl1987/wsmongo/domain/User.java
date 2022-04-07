@@ -1,9 +1,12 @@
 package com.gfl1987.wsmongo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -16,17 +19,20 @@ public class User implements Serializable {
 	private String name;
 	private String email;
 	
-	public User() {
+	@DBRef(lazy = true) //anotação que referencia a referencia das postagens
+	private List<Post> posts = new ArrayList<>(); //atributo de uma lista de postagens
+	
+	public User() { //construtor vazio
 	}
 
-	public User(String id, String name, String email) {
+	public User(String id, String name, String email) { //constrtutor com argumentos
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 	}
 
-	public String getId() {
+	public String getId() { //inicio dos gets e sets
 		return id;
 	}
 
@@ -48,6 +54,14 @@ public class User implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) { //fim dos gets e sets
+		this.posts = posts;
 	}
 
 	@Override
