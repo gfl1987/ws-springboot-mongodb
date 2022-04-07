@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gfl1987.wsmongo.domain.User;
+import com.gfl1987.wsmongo.dto.UserDTO;
 import com.gfl1987.wsmongo.repository.UserRepository;
 import com.gfl1987.wsmongo.services.exception.ObjectNotFoundException;
 
@@ -21,9 +22,16 @@ public class UserService { //classe de serviços responsaveis por tratar os usua
 		
 	}
 	
-	public User findById(String id) {
+	public User findById(String id) { //metodo para pesquisar usuario por ID
 		Optional<User> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
+	public User insert(User obj) { //metodo para inserir usuario
+		return repo.insert(obj);
+	}
+
+	public User fromDTO(UserDTO objDto) { //meotodo que pega um DTO e instancia um usuario
+		return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
+	}	
 }
