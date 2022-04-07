@@ -1,5 +1,6 @@
 package com.gfl1987.wsmongo.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,5 +24,10 @@ public class PostService {
 	
 	public List<Post> findByTitle(String text) { //metodo que retorna uma busca por titulo
 		return repo.searchTitle(text); //retorna a pesquisa por texto
+	}
+	
+	public List<Post> fullSearch(String text, Date minDate, Date maxDate) { //metodo que retorna uma busca por data e texto
+		maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000);
+		return repo.fullSearch(text, minDate, maxDate);
 	}
 }
